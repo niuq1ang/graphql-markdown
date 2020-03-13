@@ -29,7 +29,12 @@ function renderObject(type, options) {
   const isInputObject = type.kind === 'INPUT_OBJECT'
 
   if (!skipTitle) {
-    printer(`\n${'#'.repeat(headingLevel + 2)} ${type.name}\n`)
+    printer(
+      `\n${'#'.repeat(headingLevel + 2)} <div id="${type.name}">${
+        type.name
+      }</div>\n`
+    )
+    // printer(`\n${'#'.repeat(headingLevel + 2)} ${type.name}\n`)
   }
   if (type.description) {
     printer(`${type.description}\n`)
@@ -157,42 +162,81 @@ function renderSchema(schema, options) {
   if (!skipTableOfContents) {
     printer('<details>')
     printer('  <summary><strong>Table of Contents</strong></summary>\n')
+    printer(`<ul>`)
     if (query) {
-      printer('  * [Query](#query)')
+      printer(`<li><a href="#query-query">Query</a></li>`)
+      // printer(`<a href="#query-query">   - Query</a><br>`)
+      // printer('  - [Query](#query)')
     }
     if (mutation) {
-      printer('  * [Mutation](#mutation)')
+      printer(`<li><a href="#mutation-mutation">Mutation</a></li>`)
+      // printer('  - [Mutation](#mutation)')
     }
     if (objects.length) {
-      printer('  * [Objects](#objects)')
+      printer(`<li><a href="#objects">Objects</a><li>`)
+      // printer('  - [Objects](#objects)')
+      printer(`<ul>`)
       objects.forEach(type => {
-        printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
+        if (type.name.length > 0) {
+          printer(
+            `<li><a href="#${type.name}">${type.name.toLowerCase()}</a></li>`
+          )
+        }
+        // printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
       })
+      printer(`</ul>`)
     }
     if (inputs.length) {
-      printer('  * [Inputs](#inputs)')
+      printer(`<li><a href="#inputs">Inputs</a></li>`)
+      // printer('  - [Inputs](#inputs)<br>')
+      printer(`<ul>`)
       inputs.forEach(type => {
-        printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
+        printer(
+          `<li><a href="#${type.name}">${type.name.toLowerCase()}</a></li>`
+        )
+        // printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
       })
+      printer(`</ul>`)
     }
+
     if (enums.length) {
-      printer('  * [Enums](#enums)')
+      printer(`<li><a href="#enums">Enums</a></li>`)
+      // printer('  - [Enums](#enums)<br>')
+      printer(`<ul>`)
       enums.forEach(type => {
-        printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
+        printer(
+          `<li><a href="#${type.name}">${type.name.toLowerCase()}</a></li>`
+        )
+        // printer(`    - [${type.name}](#${type.name.toLowerCase()})`)
       })
+      printer(`</ul>`)
     }
     if (scalars.length) {
-      printer('  * [Scalars](#scalars)')
+      printer(`<li><a href="#scalars">Scalars</a></li>`)
+      // printer('  - [Scalars](#scalars)<br>')
+      printer(`<ul>`)
       scalars.forEach(type => {
-        printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
+        printer(
+          `<li><a href="#${type.name}">${type.name.toLowerCase()}</a></li>`
+        )
+        // printer(`    - [${type.name}](#${type.name.toLowerCase()})`)
+        // printer(`    - [${type.name}](#${type.name.toLowerCase()})`)
       })
+      printer(`</ul>`)
     }
     if (interfaces.length) {
-      printer('  * [Interfaces](#interfaces)')
+      printer(`<li><a href="#interfaces">Interfaces</a></li>`)
+      // printer('  - [Interfaces](#interfaces)<br>')
+      printer(`<ul>`)
       interfaces.forEach(type => {
-        printer(`    * [${type.name}](#${type.name.toLowerCase()})`)
+        printer(
+          `<li><a href="#${type.name}">${type.name.toLowerCase()}</a></li>`
+        )
+        // printer(`    - [${type.name}](#${type.name.toLowerCase()})`)
       })
+      printer(`</ul>`)
     }
+    printer(`</ul>`)
     printer('\n</details>')
   }
 
@@ -236,7 +280,12 @@ function renderSchema(schema, options) {
   if (enums.length) {
     printer(`\n${'#'.repeat(headingLevel + 1)} Enums`)
     enums.forEach(type => {
-      printer(`\n${'#'.repeat(headingLevel + 2)} ${type.name}\n`)
+      printer(
+        `\n${'#'.repeat(headingLevel + 2)} <div id="${type.name}">${
+          type.name
+        }</div>\n`
+      )
+      // printer(`\n${'#'.repeat(headingLevel + 2)} ${type.name}`)
       if (type.description) {
         printer(`${type.description}\n`)
       }
